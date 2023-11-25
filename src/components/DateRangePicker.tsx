@@ -13,7 +13,7 @@ function DateRangePicker() {
     setCurrentMonth(currentMonth.add(1, 'month'));
   }
 
-  function getDaysInPrevMonth() {
+  function getPartialDatesInPrevMonth() {
     const firstDayOfCurrentMonth = currentMonth.startOf('month').day() || 7;
     const prevMonth = currentMonth.subtract(1, 'month');
     const daysInPrevMonth = prevMonth.daysInMonth();
@@ -24,31 +24,31 @@ function DateRangePicker() {
     );
   }
 
-  function getDaysInNextMonth() {
+  function getPartialDatesInNextMonth() {
     const lastDayOfCurrentMonth = currentMonth.endOf('month').day() || 7;
     return Array.from({ length: 7 - lastDayOfCurrentMonth }, (_, i) => i + 1);
   }
 
   function renderDaysButtons() {
-    const daysInPrevMonth = getDaysInPrevMonth();
-    const daysInNextMonth = getDaysInNextMonth();
+    const partialDatesInPrevMonth = getPartialDatesInPrevMonth();
+    const partialDatesInNextMonth = getPartialDatesInNextMonth();
     const daysInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
 
     return (
       <>
-        {daysInPrevMonth.map((day) => (
-          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={day}>
-            {day}
+        {partialDatesInPrevMonth.map((date) => (
+          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={`prev-${date}`}>
+            {date}
           </button>
         ))}
-        {daysInCurrentMonth.map((day) => (
-          <button className={styles.dayButton} key={day}>
-            {day}
+        {daysInCurrentMonth.map((date) => (
+          <button className={styles.dayButton} key={`current-${date}`}>
+            {date}
           </button>
         ))}
-        {daysInNextMonth.map((day) => (
-          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={day}>
-            {day}
+        {partialDatesInNextMonth.map((date) => (
+          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={`next-${date}`}>
+            {date}
           </button>
         ))}
       </>

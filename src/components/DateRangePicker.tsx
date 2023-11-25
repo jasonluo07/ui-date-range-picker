@@ -13,10 +13,47 @@ function DateRangePicker() {
     setCurrentMonth(currentMonth.add(1, 'month'));
   }
 
-  const daysInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
-  // 這個月的第一天是禮拜幾，這個值會是 0 ~ 6，但是當等於 0 時，會有個問題，應該要是 7，這樣才順序才會正確
-  const firstDayOfCurrentMonth = currentMonth.startOf('month').day() || 7;
-  const lastDayOfCurrentMonth = currentMonth.endOf('month').day() || 7;
+  function getDaysInPrevMonth() {
+    const firstDayOfCurrentMonth = currentMonth.startOf('month').day() || 7;
+    const prevMonth = currentMonth.subtract(1, 'month');
+    const daysInPrevMonth = prevMonth.daysInMonth();
+
+    return Array.from(
+      { length: firstDayOfCurrentMonth - 1 },
+      (_, i) => daysInPrevMonth - (firstDayOfCurrentMonth - 1) + i
+    );
+  }
+
+  function getDaysInNextMonth() {
+    const lastDayOfCurrentMonth = currentMonth.endOf('month').day() || 7;
+    return Array.from({ length: 7 - lastDayOfCurrentMonth }, (_, i) => i + 1);
+  }
+
+  function renderDaysButtons() {
+    const daysInPrevMonth = getDaysInPrevMonth();
+    const daysInNextMonth = getDaysInNextMonth();
+    const daysInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
+
+    return (
+      <>
+        {daysInPrevMonth.map((day) => (
+          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={day}>
+            {day}
+          </button>
+        ))}
+        {daysInCurrentMonth.map((day) => (
+          <button className={styles.dayButton} key={day}>
+            {day}
+          </button>
+        ))}
+        {daysInNextMonth.map((day) => (
+          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={day}>
+            {day}
+          </button>
+        ))}
+      </>
+    );
+  }
 
   return (
     <div className={styles.dateRangePicker}>
@@ -29,28 +66,7 @@ function DateRangePicker() {
           &gt;
         </button>
       </div>
-      <div className={styles.days}>
-        {/* 上個月要顯示的日期 */}
-        {Array.from({ length: firstDayOfCurrentMonth - 1 }, (_, i) => (
-          <button key={i} className={`${styles.dayButton} ${styles.nonCurrentMonth}`}>
-            {dayjs(currentMonth).subtract(1, 'month').endOf('month').date() - (firstDayOfCurrentMonth - 1) + i}日
-          </button>
-        ))}
-
-        {/* 這個月的所有日期 */}
-        {daysInCurrentMonth.map((day) => (
-          <button key={day} className={styles.dayButton}>
-            {day}日
-          </button>
-        ))}
-
-        {/* 下個月要顯示的日期 */}
-        {Array.from({ length: 7 - lastDayOfCurrentMonth }, (_, i) => (
-          <button key={i} className={`${styles.dayButton} ${styles.nonCurrentMonth}`}>
-            {i + 1}日
-          </button>
-        ))}
-      </div>
+      <div className={styles.days}>{renderDaysButtons()}</div>
     </div>
   );
 }

@@ -13,6 +13,12 @@ function DateRangePicker() {
     setCurrentMonth(currentMonth.add(1, 'month'));
   }
 
+  function handlePickDateRange(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const target = event.target as HTMLButtonElement;
+    if (target.tagName !== 'BUTTON') return;
+    console.log('🚀 ~ file: DateRangePicker.tsx:19 ~ handlePickDateRange ~ target.dataset.date:', target.dataset.date);
+  }
+
   function getPartialDatesInPrevMonth() {
     const firstDayOfCurrentMonth = currentMonth.startOf('month').day() || 7;
     const prevMonth = currentMonth.subtract(1, 'month');
@@ -37,17 +43,29 @@ function DateRangePicker() {
     return (
       <>
         {partialDatesInPrevMonth.map((date) => (
-          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={`prev-${date}`}>
+          <button
+            className={`${styles.dayButton} ${styles.nonCurrentMonth}`}
+            data-date={currentMonth.subtract(1, 'month').set('date', date).format('YYYY-MM-DD')}
+            key={`prev-${date}`}
+          >
             {date}
           </button>
         ))}
         {daysInCurrentMonth.map((date) => (
-          <button className={styles.dayButton} key={`current-${date}`}>
+          <button
+            className={styles.dayButton}
+            data-date={currentMonth.set('date', date).format('YYYY-MM-DD')}
+            key={`current-${date}`}
+          >
             {date}
           </button>
         ))}
         {partialDatesInNextMonth.map((date) => (
-          <button className={`${styles.dayButton} ${styles.nonCurrentMonth}`} key={`next-${date}`}>
+          <button
+            className={`${styles.dayButton} ${styles.nonCurrentMonth}`}
+            data-date={currentMonth.add(1, 'month').set('date', date).format('YYYY-MM-DD')}
+            key={`next-${date}`}
+          >
             {date}
           </button>
         ))}
@@ -66,7 +84,9 @@ function DateRangePicker() {
           &gt;
         </button>
       </div>
-      <div className={styles.days}>{renderDaysButtons()}</div>
+      <div className={styles.days} onClick={handlePickDateRange}>
+        {renderDaysButtons()}
+      </div>
     </div>
   );
 }

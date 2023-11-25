@@ -1,15 +1,28 @@
+import { useState } from 'react';
+import dayjs from 'dayjs';
 import styles from './DateRangePicker.module.css';
 
 function DateRangePicker() {
+  const [currentMonth, setCurrentMonth] = useState(dayjs());
+
+  function handleGoToPrevMonth() {
+    setCurrentMonth(currentMonth.subtract(1, 'month'));
+  }
+
+  function handleGoToNextMonth() {
+    setCurrentMonth(currentMonth.add(1, 'month'));
+  }
+
   return (
     <div className={styles.dateRangePicker}>
       <div className={styles.header}>
-        <button className={`${styles.monthSelect} ${styles.prevMonth}`}>&lt;</button>
-        <span>
-          {/* TODO: 動態產生月份 */}
-          2022年9月
-        </span>
-        <button className={`${styles.monthSelect} ${styles.nextMonth}`}>&gt;</button>
+        <button className={`${styles.monthSelect} ${styles.prevMonth}`} onClick={handleGoToPrevMonth}>
+          &lt;
+        </button>
+        <span>{currentMonth.format('YYYY年M月')}</span>
+        <button className={`${styles.monthSelect} ${styles.nextMonth}`} onClick={handleGoToNextMonth}>
+          &gt;
+        </button>
       </div>
       <div className={styles.days}>
         {/* TODO: 動態產生日期按鈕，要注意：一個禮拜的第一天是禮拜一 */}

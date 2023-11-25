@@ -8,6 +8,7 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isBetween);
 
 function DateRangePicker() {
+  const today = dayjs();
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -84,7 +85,10 @@ function DateRangePicker() {
         })}
         {daysInCurrentMonth.map((date) => {
           const dayjsDate = currentMonth.set('date', date);
-          const className = `${styles.dateButton} ${isDateInRange(dayjsDate) ? styles.active : ''}`;
+          const isToday = dayjsDate.isSame(today, 'day');
+          const className = `${styles.dateButton} ${isToday ? styles.today : ''} ${
+            isDateInRange(dayjsDate) ? styles.active : ''
+          }`;
 
           return (
             <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`current-${date}`}>

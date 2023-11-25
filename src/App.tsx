@@ -1,8 +1,11 @@
+import DateRangePicker from './components/DateRangePicker';
+import styles from './App.module.css';
+
 function App() {
   return (
-    <>
-      <h1>Hello</h1>
-    </>
+    <div className={styles.app}>
+      <DateRangePicker />
+    </div>
   );
 }
 

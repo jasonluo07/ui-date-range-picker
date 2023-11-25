@@ -44,7 +44,7 @@ function DateRangePicker() {
       <>
         {partialDatesInPrevMonth.map((date) => (
           <button
-            className={`${styles.dayButton} ${styles.nonCurrentMonth}`}
+            className={`${styles.dateButton} ${styles.nonCurrentMonth}`}
             data-date={currentMonth.subtract(1, 'month').set('date', date).format('YYYY-MM-DD')}
             key={`prev-${date}`}
           >
@@ -53,7 +53,7 @@ function DateRangePicker() {
         ))}
         {daysInCurrentMonth.map((date) => (
           <button
-            className={styles.dayButton}
+            className={styles.dateButton}
             data-date={currentMonth.set('date', date).format('YYYY-MM-DD')}
             key={`current-${date}`}
           >
@@ -62,7 +62,7 @@ function DateRangePicker() {
         ))}
         {partialDatesInNextMonth.map((date) => (
           <button
-            className={`${styles.dayButton} ${styles.nonCurrentMonth}`}
+            className={`${styles.dateButton} ${styles.nonCurrentMonth}`}
             data-date={currentMonth.add(1, 'month').set('date', date).format('YYYY-MM-DD')}
             key={`next-${date}`}
           >
@@ -84,7 +84,7 @@ function DateRangePicker() {
           &gt;
         </button>
       </div>
-      <div className={styles.days} onClick={handlePickDateRange}>
+      <div className={styles.calendar} onClick={handlePickDateRange}>
         {renderDaysButtons()}
       </div>
     </div>

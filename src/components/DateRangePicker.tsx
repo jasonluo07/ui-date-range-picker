@@ -20,7 +20,7 @@ function DateRangePicker() {
 
     return Array.from(
       { length: firstDayOfCurrentMonth - 1 },
-      (_, i) => daysInPrevMonth - (firstDayOfCurrentMonth - 1) + i
+      (_, i) => daysInPrevMonth - (firstDayOfCurrentMonth - 1) + 1 + i
     );
   }
 

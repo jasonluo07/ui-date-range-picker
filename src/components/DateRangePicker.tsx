@@ -1,9 +1,16 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isBetween from 'dayjs/plugin/isBetween';
 import styles from './DateRangePicker.module.css';
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isBetween);
 
 function DateRangePicker() {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
+  const [startDate, setStartDate] = useState<Dayjs | null>(null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
   function handleGoToPrevMonth() {
     setCurrentMonth(currentMonth.subtract(1, 'month'));
@@ -16,7 +23,28 @@ function DateRangePicker() {
   function handlePickDateRange(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const target = event.target as HTMLButtonElement;
     if (target.tagName !== 'BUTTON') return;
-    console.log('🚀 ~ file: DateRangePicker.tsx:19 ~ handlePickDateRange ~ target.dataset.date:', target.dataset.date);
+
+    const pickedDate = dayjs(target.dataset.date);
+
+    if (!startDate || pickedDate.isBefore(startDate) || (startDate && endDate)) {
+      setStartDate(pickedDate);
+      setEndDate(null);
+    } else if (pickedDate.isSameOrAfter(startDate)) {
+      setEndDate(pickedDate);
+    }
+  }
+
+  function isDateInRange(date: Dayjs) {
+    // 情況一：沒有選擇開始日期
+    if (!startDate) return false;
+
+    // 情況二：選擇了開始日期，但沒有選擇結束日期
+    if (!endDate) {
+      return date.isSame(startDate, 'day');
+    }
+
+    // 情況三：選擇了開始日期，也選擇了結束日期
+    return date.isBetween(startDate, endDate, 'day', '[]');
   }
 
   function getPartialDatesInPrevMonth() {
@@ -42,33 +70,40 @@ function DateRangePicker() {
 
     return (
       <>
-        {partialDatesInPrevMonth.map((date) => (
-          <button
-            className={`${styles.dateButton} ${styles.nonCurrentMonth}`}
-            data-date={currentMonth.subtract(1, 'month').set('date', date).format('YYYY-MM-DD')}
-            key={`prev-${date}`}
-          >
-            {date}
-          </button>
-        ))}
-        {daysInCurrentMonth.map((date) => (
-          <button
-            className={styles.dateButton}
-            data-date={currentMonth.set('date', date).format('YYYY-MM-DD')}
-            key={`current-${date}`}
-          >
-            {date}
-          </button>
-        ))}
-        {partialDatesInNextMonth.map((date) => (
-          <button
-            className={`${styles.dateButton} ${styles.nonCurrentMonth}`}
-            data-date={currentMonth.add(1, 'month').set('date', date).format('YYYY-MM-DD')}
-            key={`next-${date}`}
-          >
-            {date}
-          </button>
-        ))}
+        {partialDatesInPrevMonth.map((date) => {
+          const dayjsDate = currentMonth.subtract(1, 'month').set('date', date);
+          const className = `${styles.dateButton} ${styles.nonCurrentMonth} ${
+            isDateInRange(dayjsDate) ? styles.active : ''
+          }`;
+
+          return (
+            <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`prev-${date}`}>
+              {date}
+            </button>
+          );
+        })}
+        {daysInCurrentMonth.map((date) => {
+          const dayjsDate = currentMonth.set('date', date);
+          const className = `${styles.dateButton} ${isDateInRange(dayjsDate) ? styles.active : ''}`;
+
+          return (
+            <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`current-${date}`}>
+              {date}
+            </button>
+          );
+        })}
+        {partialDatesInNextMonth.map((date) => {
+          const dayjsDate = currentMonth.add(1, 'month').set('date', date);
+          const className = `${styles.dateButton} ${styles.nonCurrentMonth} ${
+            isDateInRange(dayjsDate) ? styles.active : ''
+          }`;
+
+          return (
+            <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`next-${date}`}>
+              {date}
+            </button>
+          );
+        })}
       </>
     );
   }

@@ -2,6 +2,8 @@ import dayjs, { type Dayjs } from 'dayjs';
 
 import styles from './Calendar.module.css';
 
+import DateButton from './DateButton';
+
 type CalendarProps = {
   startDate: Dayjs | null;
   endDate: Dayjs | null;
@@ -12,7 +14,7 @@ type CalendarProps = {
 const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: CalendarProps) => {
   const today = dayjs();
 
-  const isDateInRange = (date: Dayjs) => {
+  const getIsDateInRange = (date: Dayjs) => {
     if (!startDate) return false;
     if (!endDate) return date.isSame(startDate, 'day');
     return date.isBetween(startDate, endDate, 'day', '[]');
@@ -43,39 +45,45 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
       <>
         {partialDatesInPrevMonth.map((date) => {
           const dayjsDate = currentMonth.subtract(1, 'month').set('date', date);
-          const className = `${styles.dateButton} ${styles.nonCurrentMonth} ${
-            isDateInRange(dayjsDate) ? styles.active : ''
-          }`;
+          const isDateInRange = getIsDateInRange(dayjsDate);
 
           return (
-            <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`prev-${date}`}>
-              {date}
-            </button>
+            <DateButton
+              date={dayjsDate}
+              isToday={false}
+              isCurrentMonth={false}
+              isDateInRange={isDateInRange}
+              key={`prev-${date}`}
+            />
           );
         })}
         {datesInCurrentMonth.map((date) => {
           const dayjsDate = currentMonth.set('date', date);
           const isToday = dayjsDate.isSame(today, 'day');
-          const className = `${styles.dateButton} ${isToday ? styles.today : ''} ${
-            isDateInRange(dayjsDate) ? styles.active : ''
-          }`;
+          const isDateInRange = getIsDateInRange(dayjsDate);
 
           return (
-            <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`current-${date}`}>
-              {date}
-            </button>
+            <DateButton
+              date={dayjsDate}
+              isToday={isToday}
+              isCurrentMonth={true}
+              isDateInRange={isDateInRange}
+              key={`current-${date}`}
+            />
           );
         })}
         {partialDatesInNextMonth.map((date) => {
           const dayjsDate = currentMonth.add(1, 'month').set('date', date);
-          const className = `${styles.dateButton} ${styles.nonCurrentMonth} ${
-            isDateInRange(dayjsDate) ? styles.active : ''
-          }`;
+          const isDateInRange = getIsDateInRange(dayjsDate);
 
           return (
-            <button className={className} data-date={dayjsDate.format('YYYY-MM-DD')} key={`next-${date}`}>
-              {date}
-            </button>
+            <DateButton
+              date={dayjsDate}
+              isToday={false}
+              isCurrentMonth={false}
+              isDateInRange={isDateInRange}
+              key={`next-${date}`}
+            />
           );
         })}
       </>

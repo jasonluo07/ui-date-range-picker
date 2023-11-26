@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import dayjs, { type Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -15,13 +15,13 @@ const DateRangePicker = () => {
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
-  const handleGoToPrevMonth = () => {
+  const handleGoToPrevMonth = useCallback(() => {
     setCurrentMonth(currentMonth.subtract(1, 'month'));
-  };
+  }, [currentMonth]);
 
-  const handleGoToNextMonth = () => {
+  const handleGoToNextMonth = useCallback(() => {
     setCurrentMonth(currentMonth.add(1, 'month'));
-  };
+  }, [currentMonth]);
 
   const handlePickDateRange = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = event.target as HTMLButtonElement;

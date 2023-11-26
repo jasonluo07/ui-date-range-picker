@@ -20,10 +20,13 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
     const partialDatesInNextMonth = getPartialDatesInNextMonth(currentMonth);
     const datesInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
 
+    const prevMonth = currentMonth.subtract(1, 'month');
+    const nextMonth = currentMonth.add(1, 'month');
+
     return (
       <>
         {partialDatesInPrevMonth.map((date) => {
-          const dayjsDate = currentMonth.subtract(1, 'month').set('date', date);
+          const dayjsDate = prevMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
 
           return (
@@ -52,7 +55,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
           );
         })}
         {partialDatesInNextMonth.map((date) => {
-          const dayjsDate = currentMonth.add(1, 'month').set('date', date);
+          const dayjsDate = nextMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
 
           return (

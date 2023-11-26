@@ -4,6 +4,7 @@ import styles from './Calendar.module.css';
 import { getPartialDatesInPrevMonth, getPartialDatesInNextMonth, getIsDateInRange } from '@/utils/date';
 
 import DateButton from './DateButton';
+import { useMemo } from 'react';
 
 type CalendarProps = {
   startDate: Dayjs | null;
@@ -15,11 +16,15 @@ type CalendarProps = {
 const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: CalendarProps) => {
   const today = dayjs();
 
-  const renderDateButtons = () => {
-    const partialDatesInPrevMonth = getPartialDatesInPrevMonth(currentMonth);
-    const partialDatesInNextMonth = getPartialDatesInNextMonth(currentMonth);
-    const datesInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
+  const { partialDatesInPrevMonth, partialDatesInNextMonth, datesInCurrentMonth } = useMemo(() => {
+    return {
+      partialDatesInPrevMonth: getPartialDatesInPrevMonth(currentMonth),
+      partialDatesInNextMonth: getPartialDatesInNextMonth(currentMonth),
+      datesInCurrentMonth: Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1),
+    };
+  }, [currentMonth]);
 
+  const renderDateButtons = () => {
     const prevMonth = currentMonth.subtract(1, 'month');
     const nextMonth = currentMonth.add(1, 'month');
 

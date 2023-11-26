@@ -34,10 +34,10 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
     return Array.from({ length: 7 - lastDayOfCurrentMonth }, (_, i) => i + 1);
   };
 
-  const renderDayButtons = () => {
+  const renderDateButtons = () => {
     const partialDatesInPrevMonth = getPartialDatesInPrevMonth();
     const partialDatesInNextMonth = getPartialDatesInNextMonth();
-    const daysInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
+    const datesInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
 
     return (
       <>
@@ -53,7 +53,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
             </button>
           );
         })}
-        {daysInCurrentMonth.map((date) => {
+        {datesInCurrentMonth.map((date) => {
           const dayjsDate = currentMonth.set('date', date);
           const isToday = dayjsDate.isSame(today, 'day');
           const className = `${styles.dateButton} ${isToday ? styles.today : ''} ${
@@ -84,7 +84,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
 
   return (
     <div className={styles.calendar} onClick={onPickDateRange}>
-      {renderDayButtons()}
+      {renderDateButtons()}
     </div>
   );
 };

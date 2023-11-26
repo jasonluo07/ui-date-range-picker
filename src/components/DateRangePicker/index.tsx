@@ -2,7 +2,7 @@ import { useState } from 'react';
 import dayjs, { type Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isBetween from 'dayjs/plugin/isBetween';
-import styles from './DateRangePicker.module.css';
+import styles from './index.module.css';
 
 import Header from './Header';
 import Calendar from './Calendar';

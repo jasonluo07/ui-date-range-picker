@@ -1,6 +1,7 @@
 .app {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  padding-top: 40vh;
   align-items: center;
   height: 100vh;
 }

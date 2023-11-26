@@ -1,5 +1,5 @@
 .dateRangePicker {
   width: 350px;
-  height: 272px; /* 44 + 16 + 36 * 6 最多會有 6 個星期的可能 */
   font-size: 16px;
+  outline: 1px solid gray;
 }

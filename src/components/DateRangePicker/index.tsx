@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import dayjs, { type Dayjs } from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -10,7 +10,11 @@ import Calendar from './Calendar';
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isBetween);
 
-const DateRangePicker = () => {
+type DateRangePickerProps = {
+  onChange?: (startDate: Dayjs | null, endDate: Dayjs | null) => void;
+};
+
+const DateRangePicker = ({ onChange }: DateRangePickerProps) => {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -36,6 +40,12 @@ const DateRangePicker = () => {
       setEndDate(pickedDate);
     }
   };
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(startDate, endDate);
+    }
+  }, [startDate, endDate, onChange]);
 
   return (
     <div className={styles.dateRangePicker}>

@@ -1,4 +1,4 @@
-import DateRangePicker from './components/DateRangePicker';
+import DateRangePicker from '@/components/DateRangePicker';
 import styles from './App.module.css';
 
 const App = () => {

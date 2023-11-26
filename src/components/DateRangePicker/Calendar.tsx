@@ -1,7 +1,7 @@
 import dayjs, { type Dayjs } from 'dayjs';
 
 import styles from './Calendar.module.css';
-import { getPartialDatesInPrevMonth, getPartialDatesInNextMonth, getIsDateInRange } from '../../utils/date';
+import { getPartialDatesInPrevMonth, getPartialDatesInNextMonth, getIsDateInRange } from '@/utils/date';
 
 import DateButton from './DateButton';
 

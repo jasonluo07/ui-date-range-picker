@@ -4,6 +4,8 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isBetween from 'dayjs/plugin/isBetween';
 import styles from './DateRangePicker.module.css';
 
+import Header from './Header';
+
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isBetween);
 
@@ -107,15 +109,7 @@ const DateRangePicker = () => {
 
   return (
     <div className={styles.dateRangePicker}>
-      <div className={styles.header}>
-        <button className={`${styles.monthSelect} ${styles.prevMonth}`} onClick={handleGoToPrevMonth}>
-          &lt;
-        </button>
-        <span>{currentMonth.format('YYYY年M月')}</span>
-        <button className={`${styles.monthSelect} ${styles.nextMonth}`} onClick={handleGoToNextMonth}>
-          &gt;
-        </button>
-      </div>
+      <Header currentMonth={currentMonth} onGoToPrevMonth={handleGoToPrevMonth} onGoToNextMonth={handleGoToNextMonth} />
       <div className={styles.calendar} onClick={handlePickDateRange}>
         {renderDayButtons()}
       </div>

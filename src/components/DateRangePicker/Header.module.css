@@ -1,0 +1,19 @@
+.header {
+  height: 44px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.monthSelect {
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.monthSelect:hover {
+  background-color: #e6e6e6;
+}

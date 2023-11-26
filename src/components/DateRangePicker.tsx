@@ -7,21 +7,21 @@ import styles from './DateRangePicker.module.css';
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isBetween);
 
-function DateRangePicker() {
+const DateRangePicker = () => {
   const today = dayjs();
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
-  function handleGoToPrevMonth() {
+  const handleGoToPrevMonth = () => {
     setCurrentMonth(currentMonth.subtract(1, 'month'));
-  }
+  };
 
-  function handleGoToNextMonth() {
+  const handleGoToNextMonth = () => {
     setCurrentMonth(currentMonth.add(1, 'month'));
-  }
+  };
 
-  function handlePickDateRange(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  const handlePickDateRange = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = event.target as HTMLButtonElement;
     if (target.tagName !== 'BUTTON') return;
 
@@ -33,22 +33,15 @@ function DateRangePicker() {
     } else if (pickedDate.isSameOrAfter(startDate)) {
       setEndDate(pickedDate);
     }
-  }
+  };
 
-  function isDateInRange(date: Dayjs) {
-    // 情況一：沒有選擇開始日期
+  const isDateInRange = (date: Dayjs) => {
     if (!startDate) return false;
-
-    // 情況二：選擇了開始日期，但沒有選擇結束日期
-    if (!endDate) {
-      return date.isSame(startDate, 'day');
-    }
-
-    // 情況三：選擇了開始日期，也選擇了結束日期
+    if (!endDate) return date.isSame(startDate, 'day');
     return date.isBetween(startDate, endDate, 'day', '[]');
-  }
+  };
 
-  function getPartialDatesInPrevMonth() {
+  const getPartialDatesInPrevMonth = () => {
     const firstDayOfCurrentMonth = currentMonth.startOf('month').day() || 7;
     const prevMonth = currentMonth.subtract(1, 'month');
     const daysInPrevMonth = prevMonth.daysInMonth();
@@ -57,14 +50,14 @@ function DateRangePicker() {
       { length: firstDayOfCurrentMonth - 1 },
       (_, i) => daysInPrevMonth - (firstDayOfCurrentMonth - 1) + 1 + i
     );
-  }
+  };
 
-  function getPartialDatesInNextMonth() {
+  const getPartialDatesInNextMonth = () => {
     const lastDayOfCurrentMonth = currentMonth.endOf('month').day() || 7;
     return Array.from({ length: 7 - lastDayOfCurrentMonth }, (_, i) => i + 1);
-  }
+  };
 
-  function renderDaysButtons() {
+  const renderDayButtons = () => {
     const partialDatesInPrevMonth = getPartialDatesInPrevMonth();
     const partialDatesInNextMonth = getPartialDatesInNextMonth();
     const daysInCurrentMonth = Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
@@ -110,7 +103,7 @@ function DateRangePicker() {
         })}
       </>
     );
-  }
+  };
 
   return (
     <div className={styles.dateRangePicker}>
@@ -124,10 +117,10 @@ function DateRangePicker() {
         </button>
       </div>
       <div className={styles.calendar} onClick={handlePickDateRange}>
-        {renderDaysButtons()}
+        {renderDayButtons()}
       </div>
     </div>
   );
-}
+};
 
 export default DateRangePicker;

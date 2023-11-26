@@ -34,15 +34,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
           const dayjsDate = prevMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
 
-          return (
-            <DateButton
-              date={dayjsDate}
-              isToday={false}
-              isCurrentMonth={false}
-              isDateInRange={isDateInRange}
-              key={`prev-${date}`}
-            />
-          );
+          return <DateButton date={dayjsDate} isDateInRange={isDateInRange} key={`prev-${date}`} />;
         })}
         {datesInCurrentMonth.map((date) => {
           const dayjsDate = currentMonth.set('date', date);
@@ -53,7 +45,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
             <DateButton
               date={dayjsDate}
               isToday={isToday}
-              isCurrentMonth={true}
+              isCurrentMonth
               isDateInRange={isDateInRange}
               key={`current-${date}`}
             />
@@ -63,15 +55,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
           const dayjsDate = nextMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
 
-          return (
-            <DateButton
-              date={dayjsDate}
-              isToday={false}
-              isCurrentMonth={false}
-              isDateInRange={isDateInRange}
-              key={`next-${date}`}
-            />
-          );
+          return <DateButton date={dayjsDate} isDateInRange={isDateInRange} key={`next-${date}`} />;
         })}
       </>
     );

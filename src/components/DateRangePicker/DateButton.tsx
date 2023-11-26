@@ -5,8 +5,8 @@ import styles from './DateButton.module.css';
 
 type DateButtonProps = {
   date: Dayjs;
-  isToday: boolean;
-  isCurrentMonth: boolean;
+  isToday?: boolean;
+  isCurrentMonth?: boolean;
   isDateInRange: boolean;
 };
 

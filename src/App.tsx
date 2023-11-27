@@ -13,9 +13,11 @@ const App = () => {
   return (
     <div className={styles.app}>
       <div className={styles.content}>
-        <h1>React Date Range Picker</h1>
-        <div className={styles.dateRange}>
-          {dateRange[0]?.format('YYYY-MM-DD')} ~ {dateRange[1]?.format('YYYY-MM-DD')}
+        <h1>Date Range Picker</h1>
+        <div className={styles.dateRangeDisplay}>
+          <span className={styles.dateLeft}>{dateRange[0]?.format('YYYY-MM-DD')}</span>
+          <span className={styles.separator}> ~ </span>
+          <span className={styles.dateRight}>{dateRange[1]?.format('YYYY-MM-DD')}</span>
         </div>
         <DateRangePicker onChange={handleChange} />
       </div>

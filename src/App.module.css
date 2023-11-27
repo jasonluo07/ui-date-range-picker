@@ -1,7 +1,21 @@
 .app {
   display: flex;
-  flex-direction: column;
-  padding-top: 40vh;
+  justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dateRange {
+  width: 350px;
+  text-align: center;
+  padding-block: 10px;
+  margin-bottom: 20px;
+  background-color: lightgray;
+  outline: 1px solid black;
 }

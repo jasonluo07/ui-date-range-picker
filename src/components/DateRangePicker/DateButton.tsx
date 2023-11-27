@@ -16,10 +16,11 @@ const DateButton = ({ date, isToday, isCurrentMonth, isDateInRange }: DateButton
     [styles.nonCurrentMonth]: !isCurrentMonth,
     [styles.active]: isDateInRange,
   });
+  const dateText = date.date() + '日';
 
   return (
     <button data-date={date.format('YYYY-MM-DD')} className={className}>
-      {date.date()}
+      {dateText}
     </button>
   );
 };

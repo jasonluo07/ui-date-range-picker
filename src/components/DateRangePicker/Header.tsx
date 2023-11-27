@@ -1,5 +1,6 @@
 import { type Dayjs } from 'dayjs';
 import styles from './Header.module.css';
+import { formatMonth } from '@/utils/date';
 
 type HeaderProps = {
   currentMonth: Dayjs;
@@ -13,7 +14,7 @@ const Header = ({ currentMonth, onGoToPrevMonth, onGoToNextMonth }: HeaderProps)
       <button className={`${styles.monthSelect} ${styles.prevMonth}`} onClick={onGoToPrevMonth}>
         &lt;
       </button>
-      <span>{currentMonth.format('YYYY年M月')}</span>
+      <span>{formatMonth(currentMonth)}</span>
       <button className={`${styles.monthSelect} ${styles.nextMonth}`} onClick={onGoToNextMonth}>
         &gt;
       </button>

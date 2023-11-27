@@ -1,4 +1,4 @@
-import { type Dayjs } from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 
 export const getIsDateInRange = (date: Dayjs, startDate: Dayjs | null, endDate: Dayjs | null) => {
   if (!startDate) return false;
@@ -21,3 +21,5 @@ export const getPartialDatesInNextMonth = (currentMonth: Dayjs) => {
   const lastDayOfCurrentMonth = currentMonth.endOf('month').day() || 7;
   return Array.from({ length: 7 - lastDayOfCurrentMonth }, (_, i) => i + 1);
 };
+
+export const formatMonth = (date: Dayjs) => dayjs(date).format('YYYY年M月');

@@ -45,7 +45,8 @@ const DateRangePicker = ({ onChange }: DateRangePickerProps) => {
     if (onChange) {
       onChange(startDate, endDate);
     }
-  }, [startDate, endDate, onChange]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startDate, endDate]);
 
   return (
     <div className={styles.dateRangePicker}>

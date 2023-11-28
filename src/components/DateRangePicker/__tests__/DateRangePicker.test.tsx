@@ -8,6 +8,16 @@ describe('DateRangePicker Component', () => {
     render(<DateRangePicker />);
   });
 
+  describe('Date Button Functionality', () => {
+    it('marks the button representing today\'s date with a "today" class', () => {
+      const today = dayjs().format('YYYY-MM-DD');
+      const todayButton = screen.getByText(
+        (_content, element) => element!.tagName.toLowerCase() === 'button' && element!.getAttribute('data-date') === today
+      );
+      expect(todayButton.getAttribute('class')).toMatch('today');
+    });
+  });
+
   describe('Month Selection Functionality', () => {
     const currentMonth = dayjs();
     const prevMonth = currentMonth.subtract(1, 'month');

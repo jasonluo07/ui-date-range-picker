@@ -1,7 +1,12 @@
 import dayjs, { type Dayjs } from 'dayjs';
 
 import styles from './Calendar.module.css';
-import { getPartialDatesInPrevMonth, getPartialDatesInNextMonth, getIsDateInRange } from '@/utils/date';
+import {
+  getDatesInCurrentMonth,
+  getPartialDatesInPrevMonth,
+  getPartialDatesInNextMonth,
+  getIsDateInRange,
+} from '@/utils/date';
 
 import DateButton from './DateButton';
 import { useMemo } from 'react';
@@ -18,9 +23,9 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
 
   const { partialDatesInPrevMonth, partialDatesInNextMonth, datesInCurrentMonth } = useMemo(() => {
     return {
+      datesInCurrentMonth: getDatesInCurrentMonth(currentMonth),
       partialDatesInPrevMonth: getPartialDatesInPrevMonth(currentMonth),
       partialDatesInNextMonth: getPartialDatesInNextMonth(currentMonth),
-      datesInCurrentMonth: Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1),
     };
   }, [currentMonth]);
 

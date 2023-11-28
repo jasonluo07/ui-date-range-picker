@@ -6,6 +6,10 @@ export const getIsDateInRange = (date: Dayjs, startDate: Dayjs | null, endDate: 
   return date.isBetween(startDate, endDate, 'day', '[]');
 };
 
+export const getDatesInCurrentMonth = (currentMonth: Dayjs) => {
+  return Array.from({ length: currentMonth.daysInMonth() }, (_, i) => i + 1);
+};
+
 export const getPartialDatesInPrevMonth = (currentMonth: Dayjs) => {
   const firstDayOfCurrentMonth = currentMonth.startOf('month').day() || 7;
   const prevMonth = currentMonth.subtract(1, 'month');

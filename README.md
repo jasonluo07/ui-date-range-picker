@@ -39,6 +39,9 @@ npm test
 .
 └── src
     ├── components
+    │   └── DateRangeDisplay
+    │       ├── index.module.css
+    │       ├── index.tsx
     │   └── DateRangePicker
     │       ├── __tests__
     │       │   └── DateRangePicker.test.tsx

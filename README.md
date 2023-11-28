@@ -8,7 +8,7 @@ UI Date Range Picker 是一個用於選擇日期範圍的 React 組件，並提�
 
 ## 必備條件
 
-node >= 18
+- node 版本需大於等於 18。你可以在專案根目錄下透過 `nvm use` 切換 node 版本。
 
 ## 開始使用
 
@@ -18,6 +18,8 @@ cd ui-date-range-picker
 npm install
 npm run dev
 ```
+
+開啟瀏覽器並輸入 http://localhost:5173/ui-date-range-picker/
 
 ## 測試
 

@@ -9,7 +9,7 @@ describe('DateRangePicker Component', () => {
   });
 
   describe('Date Button Functionality', () => {
-    it('marks the button representing today\'s date with a "today" class', () => {
+    test('marks the button representing today\'s date with a "today" class', () => {
       const today = dayjs().format('YYYY-MM-DD');
       const todayButton = screen.getByText(
         (_content, element) =>
@@ -24,23 +24,23 @@ describe('DateRangePicker Component', () => {
     const prevMonth = currentMonth.subtract(1, 'month');
     const nextMonth = currentMonth.add(1, 'month');
 
-    it('displays current month', () => {
+    test('displays current month', () => {
       expect(screen.getByText(formatMonth(currentMonth))).toBeInTheDocument();
     });
 
-    it('displays October 2023 when previous month button is clicked', () => {
+    test('displays October 2023 when previous month button is clicked', () => {
       fireEvent.click(screen.getByRole('button', { name: '<' }));
       expect(screen.getByText(formatMonth(prevMonth))).toBeInTheDocument();
     });
 
-    it('displays December 2023 when next month button is clicked', () => {
+    test('displays December 2023 when next month button is clicked', () => {
       fireEvent.click(screen.getByRole('button', { name: '>' }));
       expect(screen.getByText(formatMonth(nextMonth))).toBeInTheDocument();
     });
   });
 
   describe('Date Selection Functionality', () => {
-    it('activates selected start and end dates', () => {
+    test('activates selected start and end dates', () => {
       const startButton = screen.getByRole('button', { name: '10日' });
       const endButton = screen.getByRole('button', { name: '15日' });
 
@@ -51,7 +51,7 @@ describe('DateRangePicker Component', () => {
       expect(endButton.getAttribute('class')).toMatch('active');
     });
 
-    it('updates start date when a prior date is selected as end date', () => {
+    test('updates start date when a prior date is selected as end date', () => {
       const startButton = screen.getByRole('button', { name: '10日' });
       const endButton = screen.getByRole('button', { name: '9日' });
 
@@ -62,7 +62,7 @@ describe('DateRangePicker Component', () => {
       expect(endButton.getAttribute('class')).toMatch('active');
     });
 
-    it('resets end date and sets start date when a new date is selected after a range', () => {
+    test('resets end date and sets start date when a new date is selected after a range', () => {
       const startButton = screen.getByRole('button', { name: '10日' });
       const endButton = screen.getByRole('button', { name: '15日' });
       const newStartButton = screen.getByRole('button', { name: '20日' });

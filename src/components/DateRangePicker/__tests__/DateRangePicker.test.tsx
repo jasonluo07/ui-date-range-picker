@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import DateRangePicker from '@/components/DateRangePicker';
-import dayjs from 'dayjs';
 import { formatMonth } from '@/utils/date';
+import { fireEvent, render, screen } from '@testing-library/react';
+import dayjs from 'dayjs';
 
 describe('DateRangePicker Component', () => {
   beforeEach(() => {

@@ -1,4 +1,5 @@
-import { type Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
 import styles from './index.module.css';
 
 type DateRangeDisplayProps = {

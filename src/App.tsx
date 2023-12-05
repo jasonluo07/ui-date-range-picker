@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { type Dayjs } from 'dayjs';
-import styles from './App.module.css';
+import DateRangeDisplay from '@/components/DateRangeDisplay';
 import DateRangePicker from '@/components/DateRangePicker';
-import DateRangeDisplay from './components/DateRangeDisplay';
+import type { Dayjs } from 'dayjs';
+import { useState } from 'react';
+
+import styles from './App.module.css';
 
 const App = () => {
   const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null]>([null, null]);

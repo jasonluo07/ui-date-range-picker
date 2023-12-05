@@ -1,6 +1,7 @@
-import { type Dayjs } from 'dayjs';
-import styles from './Header.module.css';
 import { formatMonth } from '@/utils/date';
+import type { Dayjs } from 'dayjs';
+
+import styles from './Header.module.css';
 
 type HeaderProps = {
   currentMonth: Dayjs;

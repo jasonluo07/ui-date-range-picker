@@ -1,5 +1,5 @@
-import { type Dayjs } from 'dayjs';
 import clsx from 'clsx';
+import type { Dayjs } from 'dayjs';
 
 import styles from './DateButton.module.css';
 

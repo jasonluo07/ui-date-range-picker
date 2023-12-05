@@ -1,15 +1,14 @@
-import dayjs, { type Dayjs } from 'dayjs';
-
-import styles from './Calendar.module.css';
 import {
   getDatesInCurrentMonth,
-  getPartialDatesInPrevMonth,
-  getPartialDatesInNextMonth,
   getIsDateInRange,
+  getPartialDatesInNextMonth,
+  getPartialDatesInPrevMonth,
 } from '@/utils/date';
-
-import DateButton from './DateButton';
+import dayjs, { type Dayjs } from 'dayjs';
 import { useMemo } from 'react';
+
+import styles from './Calendar.module.css';
+import DateButton from './DateButton';
 
 type CalendarProps = {
   startDate: Dayjs | null;
@@ -35,13 +34,13 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
 
     return (
       <>
-        {partialDatesInPrevMonth.map((date) => {
+        {partialDatesInPrevMonth.map(date => {
           const dayjsDate = prevMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
 
           return <DateButton date={dayjsDate} isDateInRange={isDateInRange} key={`prev-${date}`} />;
         })}
-        {datesInCurrentMonth.map((date) => {
+        {datesInCurrentMonth.map(date => {
           const dayjsDate = currentMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
           const isToday = dayjsDate.isSame(today, 'day');
@@ -56,7 +55,7 @@ const Calendar = ({ startDate, endDate, currentMonth, onPickDateRange }: Calenda
             />
           );
         })}
-        {partialDatesInNextMonth.map((date) => {
+        {partialDatesInNextMonth.map(date => {
           const dayjsDate = nextMonth.set('date', date);
           const isDateInRange = getIsDateInRange(dayjsDate, startDate, endDate);
 
